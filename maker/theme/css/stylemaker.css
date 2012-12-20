@@ -1,0 +1,174 @@
+/*
+================
+Copyright 2005-2008 Kristian Johansson
+All rights reserved.
+
+Maker styles
+================
+*/
+
+/***********************************************/
+/* HTML tag styles                             */
+/***********************************************/
+body{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background:#d0d0d0 url("../img/bg_body.png") repeat-x;
+	repeat-x;
+	padding: 0px;
+	margin:0px;
+}
+
+hr{width:96%;}
+p{margin:0px;padding-top:5px;padding-bottom:5px;}
+img{border:none;}
+th{padding:8px 0px 8px 0px;color:#FFFFFF;background:#000000 url("../img/bg_nav_maker.png") repeat-x;font-weight:bold;}
+
+.black{color:#000000;background-color: inherit;}
+.red{color:#A00002;background-color: inherit;}
+.blue{color:#0066FF;background-color: inherit;}
+.green{color:#00CC33;background-color: inherit;}
+.forum a{color:#A00002;background-color: inherit;}.forum a:hover{color:#A00002;background-color: inherit;}
+.irc a{color:#0000FF;background-color: inherit;}.irc a:hover{color:#0000FF;background-color: inherit;}
+.highlight{color:#000;background-color:#FFFF00;font-weight:bold;}
+
+.tag {color:#0099CC;background-color:transparent;}
+.yes {color:#28AF1A;background-color:transparent;}
+.no {color:#E93A3A;background-color:transparent;}
+.saved {color:green !important;background-color:#FFF !important; font-weight:bold !important;}
+.error {color:red !important;background-color:#FFF !important; font-weight:bold !important;}
+.warning {color:black !important;background-color:#FFFF00 !important; font-weight:bold !important;}
+.NameWasNotUnique{color:red;background-color:#FFF;}
+
+/* Content Editor */
+.section {font-size:110%;}
+.disabled {text-decoration:line-through;}
+.not_visible {opacity:0.6;filter:alpha(opacity=60);}
+.visible {font-weight:bold;}
+.newpage {font-size:90%;}
+.arrows {padding:8px 3px;color:inherit;background-color:inherit;}
+.arrows:hover {color:inherit;background-color:#ffffcc;}
+
+h3{
+	font: bold 20px Verdana, sans-serif;
+	color: #A00002;
+	background-color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+.sectionLinks{
+	/*display: block;*/
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+	/*background-image:  url("../img/bg_nav.jpg");*/
+	background-image: url("../img/bg_nav.jpg");
+	font-weight: bold;
+	padding: 3px 0px 3px 10px;
+}
+.sectionLinks a{
+	padding:0px;
+	margin:0px;
+}
+.sectionLinks a:hover{
+	text-decoration: underline;
+}
+.relatedLinks{
+	margin: 0px;
+	padding: 5px 10px 5px 10px;
+	border-bottom: 1px solid #CCCCCC;
+}
+.relatedLinks a{
+	color:#005FA9;
+	background-color: transparent;
+	/*display: block;*/
+}
+.relatedLinks a:hover{
+	color: #0000FF;
+	background-color: #ffffcc;
+	/*text-decoration: none;*/
+}
+
+/******* hyperlink and anchor tag styles *******/
+
+a{
+	color: #005FA9;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #0000FF;
+	background-color: inherit;
+	text-decoration: underline;
+}
+
+a.login{
+	color: #66F;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a.login:hover{
+	color: #66F;
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+/*a:visited{
+	color: #005FA9;
+	background-color: inherit;
+	text-decoration: none;
+}*/
+/*************** list tag styles ***************/
+
+ul{
+ list-style-type: square;
+}
+
+ul ul{
+ list-style-type: disc;
+}
+
+ul ul ul{
+ list-style-type: none;
+}
+
+/********* form and related tag styles *********/
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+label{
+ font: bold 11px Verdana,sans-serif;
+ color: #333333;
+ background-color: inherit;
+}
+				
+input{
+font-family: Verdana,sans-serif;
+}
+
+/******************** stream ********************/
+.radio{padding:2px 0px 0px 5px;}
+
+
+.infobox{
+	color: #000;
+	background-color: #FFF;
+	border: 1px solid black;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 8px;
+	margin: 5px;
+	display: table;
+	text-align: left;
+}
+
+.centerbox{
+	margin: 5px auto;
+}
+/* EOF */

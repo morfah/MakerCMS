@@ -1,0 +1,309 @@
+/*
+================
+Copyright 2005-2008 Kristian Johansson
+All rights reserved.
+================
+*/
+
+body {
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+min-width:740px;
+max-width:1337px;
+color:#000;
+background:#ccc url("../img/bg_grad.jpg") fixed;
+margin:15px auto;
+padding:0;
+}
+
+hr {
+width:96%;
+}
+
+p {
+padding-top:5px;
+padding-bottom:5px;
+margin:0;
+}
+
+img {
+border:none;
+text-decoration:none;
+}
+
+.black {
+color:#000;
+background-color:inherit;
+}
+
+.white {
+color:#FFF;
+background-color:inherit;
+}
+
+.blue {
+color:#06F;
+background-color:inherit;
+}
+
+.green {
+color:#0C3;
+background-color:inherit;
+}
+
+.red,.forum a,.forum a:hover {
+color:#A00002;
+background-color:inherit;
+}
+
+.irc a,.irc a:hover {
+color:#00F;
+background-color:inherit;
+}
+
+.highlight {
+color:#000;
+background-color:#FFFF00;
+font-weight:bold;
+}
+
+.updated {
+font-size:9px;
+display:block;
+clear:both;
+position:inherit;
+text-align:right;
+color:#999;
+background-color:inherit;
+}
+
+.newscontainer {
+width:98%;
+margin: 0 auto;
+border:#CCC solid 1px;
+}
+
+.newsheader {
+background-image:url("../img/bg_news.png");
+font-weight:bold;
+padding:0 5px;
+}
+
+.newsauthor {
+font-size:9px;
+color:#999;
+background-color:inherit;
+display:block;
+}
+
+.newsrow {
+padding:3px;
+color:inherit;
+background-color:white;
+}
+
+#sitehead {
+color:#000;
+background-color:inherit;
+background-image:url("../img/bglogo.jpg");
+height:70px;
+border-bottom:1px solid #ccd2d2;
+-moz-border-top-right-radius: 15px;
+border-top-right-radius: 15px;
+-moz-border-top-left-radius: 15px;
+border-top-left-radius: 15px;
+}
+
+#logo {
+position:absolute;
+display:block;
+text-align:left;
+}
+
+/*#tr {
+margin: 0 0 0 auto;
+}*/
+
+#searchstyle {
+position:relative;
+z-index:1;
+float: right;
+margin: 40px 10px 0 0;
+}
+
+#searchstyle input,label {
+font-size:9px;
+}
+
+#quote {
+color:#666;
+background-color:#FFF;
+border-bottom:1px solid #ccd2d2;
+margin:0;
+padding:10px;
+}
+
+#container {
+color:#000;
+background-color:#FFF;
+}
+
+#leftmenu {
+float:left;
+width:150px;
+color:#21536A;
+background-color:#F5F7F7;
+border-right:1px solid #CCC;
+padding:0;
+}
+
+#rightmenu {
+float:right;
+width:150px;
+color:#21536A;
+background-color:#F5F7F7;
+border-left:1px solid #CCC;
+padding:0;
+}
+
+.section {
+display:block;
+border-top:1px solid #FFF;
+border-bottom:1px solid #CCC;
+background-image:url("../img/bg_nav.jpg");
+font-weight:700;
+padding:3px 0 3px 10px;
+}
+
+.section a {
+margin:0;
+padding:0;
+}
+
+.subpages {
+border-bottom:1px solid #CCC;
+margin:0;
+padding:5px 10px;
+}
+
+.subpages a {
+color:#005FA9;
+background-color:#F5F7F7;
+display:block;
+padding-top: 2px;
+padding-bottom: 2px;
+}
+
+.subpages a:hover {
+color:#00F;
+background-color:#EAEAEA;
+border-bottom:none;
+}
+
+#extra {
+color:#000;
+background-color:#FFF;
+border-bottom:1px solid #CCC;
+vertical-align:middle;
+margin:0 150px;
+padding:10px;
+}
+
+#content {
+color:#000;
+background-color:#FFF;
+margin:0 150px;
+padding:5px 10px 10px;
+}
+
+#content h3 {
+font-size:20px;
+font-weight:bold;
+color:#A00002;
+background-color:#FFF;
+margin:0;
+padding:0;
+}
+
+.searchresult {
+position:relative;
+float:left;
+margin-left:10px;
+margin-right:10px;
+}
+
+/*html>body #content {height: auto;} */
+#containerfixer {
+clear:both;
+display:block;
+}
+
+#sitefoot {
+display:block;
+border-top:1px solid #CCC;
+border-bottom:1px solid #CCC;
+color:#000;
+background-color:#FFF;
+font-size:9px;
+text-align:center;
+padding:10px;
+-moz-border-bottom-right-radius: 10px;
+border-bottom-right-radius: 10px;
+-moz-border-bottom-left-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+
+#sitefoot img {
+vertical-align:middle;
+}
+
+#gooooooooogle_top {
+position:absolute;
+display:block;
+text-align:left;
+top:30px;
+left:500px;
+font-size:36px;
+}
+
+#gooooooooogle_bottom {
+clear:both;
+display:block;
+vertical-align:middle;
+text-align:center;
+}
+
+a {
+color:#005FA9;
+background-color:inherit;
+text-decoration:none;
+}
+
+a:hover {
+color:#00F;
+background-color:inherit;
+text-decoration:underline;
+}
+
+ul {
+list-style-type:square;
+}
+
+ul ul {
+list-style-type:disc;
+}
+
+ul ul ul {
+list-style-type:none;
+}
+
+form {
+margin:0;
+padding:0;
+}
+
+label {
+color:#333;
+background-color:inherit;
+font-weight:bold;
+}

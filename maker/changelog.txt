@@ -1,0 +1,47 @@
+Maker changelog
+
+v0.1.8
+* Passwords are now required to be at least 6 characters long.
+* Normal admins can move pages too, if they have permission to that section.
+* Fixed a few random bugs here and there.
+
+
+v0.1.7
+* Added a database upgrade script, which will modify the database if a new version requires it.
+* Completely restructured the permissions database tables.
+* Slight design change in the maker.
+* Fixed a potential endless loop when loading a quote.
+
+
+v0.1.6
+* Fixed a tiny javascript bug when canceling a move of an indirect deleted page.
+
+
+v0.1.5
+* Install script finished, we can now use the cms for new sites.
+* Fixed a ton of bugs found when starting a new site and poking around.
+* Sitemap will properly link your custom urls. And search will no longer search in them, which makes sense.
+* In Trashcan you can now move pages with a deleted setion to an alive section.
+* Headadmins can also move a page or url to a different section via the normal editor.
+* Trashcan shows indirectly deleted pages/urls too (if its section is in trashcan).
+* Fixed the Javascript that checks if you have cookies enabled.
+* Uses PHP Classes now, this will make maintaining easier in the future.
+* Ensures the admin name is unique when creating a new admin.
+* Ensures the page and url name is unique for its section when creating, moving or renaming it.
+* You can promote admins to headadmin. And you can rename them too.
+* You can not delete or demote yourself. But you are allowed to rename.
+
+
+v0.0.14
+* Converted all hyperlinks (those that are changing something) to real buttons. The CMS is supposed look more like an application. 
+* New page/section option: Menu name. This is the name shown in menus.
+* You can now add custom urls to sections. You can link to a forum or a diffrent site for example.
+* Only show top10 visited pages and ips in statistics by default.
+* When moving a page/section to trashcan it gets "order" 0. Then it re-orders the current alive pages to fix holes. When reviving a page/section it assigns the last "order" number (like if the page was new). 
+* Add a confirmation dialog when deleting something forever (sections, pages, admins, etc) 
+* You should be able to search more characters. Convert input to html with a php function before searching.
+* Translated all php comments to English. 
+* Shows news with layers instead of tables. 
+* Headadmins can delete admins directly from the admin overview page. 
+* And lots of other undocumented changes, done in the last years.
+
