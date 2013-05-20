@@ -78,20 +78,5 @@ $time = $timeafter - $timebefore;
 	800x600 minimum resolution.
 </div>
 
-<div id="gooooooooogle_bottom">
-	<br />	
-	<script type="text/javascript"><!--
-	google_ad_client = "pub-7139730724616665";
-	/* 728x90, skapad 2008-10-01 */
-	google_ad_slot = "1872048525";
-	google_ad_width = 728;
-	google_ad_height = 90;
-	//-->
-	</script>
-	<script type="text/javascript"
-	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script>
-</div>
-
 </body>
 </html>
