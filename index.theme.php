@@ -73,7 +73,7 @@ $timeafter = microtime(true);
 $time = $timeafter - $timebefore;
 ?>
 	<!--<img src="theme/img/smalllogo.gif" alt="::" width="23" height="26" />-->
-	&nbsp;&copy;&nbsp;2005-2009 <?php echo $sitename?>. <a href="?sitemap=all" title="Shows all pages">Site Map</a><br />
+	&nbsp;&copy;&nbsp;2005-2013 <?php echo $sitename?>. <a href="?sitemap=all" title="Shows all pages">Site Map</a><br />
 	<?php echo "Server spent ".substr($time,0,5)." seconds loading the page."; ?><br />
 	800x600 minimum resolution.
 </div>
