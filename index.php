@@ -2,7 +2,7 @@
 /*
 ================
 Copyright 2005-2008 Kristian Johansson
-All rights reserved. ASD
+All rights reserved.
 ================
 */
 if (!file_exists("includes/install.php") && file_exists("includes/config.php"))
