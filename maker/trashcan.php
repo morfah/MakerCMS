@@ -12,8 +12,8 @@ require_once "../includes/config.php"; // Database and Site settings
 // Headadmin and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
@@ -41,15 +41,15 @@ if ($headadmin){
 	if (isset($_POST["submit_restoresection"])){
 		$sid = $_GET["sid"];
 		$sql = "SELECT * FROM `sections` WHERE `deleted` = 0";
-		$rows = mysql_num_rows(mysql_query($sql, $conn));
+		$rows = mysqli_num_rows(mysqli_query($conn, $sql));
 		$sql = "UPDATE `sections` SET `deleted` = 0, `order` = ".($rows+1)." WHERE `sid` = $sid";
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 	else if (isset($_POST["submit_deletesection"])){
 		$sid = $_GET["sid"];
 		$sql = "DELETE sections FROM sections WHERE sections.sid=$sid";
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 	else if (isset($_POST["submit_restorepage"])){
@@ -60,16 +60,16 @@ if ($headadmin){
 		else
 			$sql = "SELECT * FROM `content` WHERE `sid` = $sid AND `deleted` = 0";
 		//echo $sql . "<br />";
-		$rows = mysql_num_rows(mysql_query($sql, $conn));
+		$rows = mysqli_num_rows(mysqli_query($conn, $sql));
 		//echo "rows = $rows <br />";
 		$sql = "UPDATE `content` SET `deleted` = 0, `order` = ".($rows+1)." WHERE `id` = $id AND `sid` = $sid";
 		//echo $sql . "<br />";
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		//Are we moving the page to a diffrent section?
 		if ($_POST["submit_restorepage"] > 0){
 			$sql = "UPDATE `content` SET `sid` = ".$_POST["submit_restorepage"]." WHERE `id` = $id AND `sid` = $sid";
 			//echo $sql;
-			@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+			@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		}
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
@@ -77,7 +77,7 @@ if ($headadmin){
 		$id=$_GET["id"];
 		$sid=$_GET["sid"];
 		$sql = "DELETE FROM content WHERE id=$id AND sid=$sid";
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 }
@@ -87,11 +87,11 @@ if ($headadmin){
 	<tr><td class="sectionLinks" colspan="<?php echo $colspan?>">Deleted sections</td></tr>
 <?php
 $sql = "SELECT * FROM sections WHERE deleted=1";
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$fetch=mysql_fetch_array($query); ?>
+	$fetch=mysqli_fetch_array($query); ?>
 	<tr>
 		<td class="relatedLinks"><a href="editors.php?sid=<?php echo $fetch["sid"]?>"><?php echo $fetch["header"]?></a></td>
 		<td class="relatedLinks">(sid: <?php echo $fetch["sid"]?>)</td>
@@ -107,11 +107,11 @@ for ($i=0;$i<$rows;$i++){
 	<tr><td class="sectionLinks" colspan="<?php echo $colspan?>">Deleted pages</td></tr>
 <?php
 $sql = "SELECT url,sid,id,header FROM content WHERE deleted=1";
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$fetch=mysql_fetch_array($query); ?>
+	$fetch=mysqli_fetch_array($query); ?>
 	<tr>
 		<td class="relatedLinks"><a href="editor<?php if ($fetch["url"]==1) echo "u"?>.php?sid=<?php echo $fetch["sid"]?>&amp;id=<?php echo $fetch["id"]?>"><?php echo $fetch["header"]?> <?php if ($fetch["url"]==1):?> <img class="url" src="theme/img/url.png" alt="URL" width="10" height="10" /><?php endif;?></a></td>
 		<td class="relatedLinks">(sid: <?php echo $fetch["sid"]?>) (id: <?php echo $fetch["id"]?>)</td>
@@ -129,11 +129,11 @@ for ($i=0;$i<$rows;$i++){
 <?php
 //$sql = "SELECT content.url,content.sid,content.id,content.header FROM content WHERE content.sid NOT IN (SELECT sections.sid FROM sections GROUP BY sections.sid)";
 $sql = "SELECT content.url,content.sid,content.id,content.header FROM content WHERE content.sid NOT IN (SELECT sections.sid FROM sections GROUP BY sections.sid) OR content.sid IN (SELECT sections.sid FROM sections WHERE sections.deleted=1 GROUP BY sections.sid)";
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$fetch=mysql_fetch_array($query); ?>
+	$fetch=mysqli_fetch_array($query); ?>
 	<tr>
 		<td class="relatedLinks"><a href="editor<?php if ($fetch["url"]==1) echo "u"?>.php?sid=<?php echo $fetch["sid"]?>&amp;id=<?php echo $fetch["id"]?>"><?php echo $fetch["header"]?> <?php if ($fetch["url"]==1):?> <img class="url" src="theme/img/url.png" alt="URL" width="10" height="10" /><?php endif;?></a></td>
 		<td class="relatedLinks">(sid: <?php echo $fetch["sid"]?>) (id: <?php echo $fetch["id"]?>)</td>
@@ -144,10 +144,10 @@ for ($i=0;$i<$rows;$i++){
 			<option selected="selected">Move to section:</option>
 <?php
 $sql2 = "SELECT sid,header FROM sections WHERE deleted=0";
-$query2 = mysql_query($sql2, $conn);
-$rows2 = mysql_num_rows($query2);
+$query2 = mysqli_query($conn, $sql2);
+$rows2 = mysqli_num_rows($query2);
 for ($i2=0;$i2<$rows2;$i2++){
-	$fetch2=mysql_fetch_array($query2);
+	$fetch2=mysqli_fetch_array($query2);
 ?>
 			<option value="<?php echo $fetch2["sid"] ?>"><?php echo $fetch2["header"]?></option>
 <?php

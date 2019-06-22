@@ -12,8 +12,8 @@ require_once "../includes/config.php"; // Database and Site settings
 // Headadmin, timezone and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, T3.timezone, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
@@ -42,11 +42,11 @@ else $AdminNameWasNotUnique = "";
 
 <?php
 $sql = "SELECT T3.id, T3.username, T3.last_login, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=T3.id) AS headadmin FROM permissions_extra AS T1, maker AS T3 WHERE T1.id = 1 ORDER BY headadmin DESC";
-$query=mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query=mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$fetch=mysql_fetch_array($query);
+	$fetch=mysqli_fetch_array($query);
 ?>
 <tr>
 	<td class="relatedLinks">

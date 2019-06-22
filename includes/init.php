@@ -7,8 +7,8 @@ require_once "includes/tracker.php";
 
 // global settings
 $sql = "SELECT * FROM `global` WHERE `global`.`id` = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "UTF-8";
@@ -61,16 +61,16 @@ else{
 			. " LIMIT 0,1";
 	}
 	//echo $sql;
-	$query = mysql_query($sql, $conn);
+	$query = mysqli_query($conn, $sql);
 	
 	// NOT FOUND? If so, show our 404 page
-	if (@mysql_num_rows($query)==0){
+	if (@mysqli_num_rows($query)==0){
 		$sql = "SELECT * FROM content WHERE sid=1 AND header='404'";
 		header("HTTP/1.1 404 Not Found");
-		$query = mysql_query($sql, $conn);
+		$query = mysqli_query($conn, $sql);
 	}
 	
-	$db = @mysql_fetch_array($query) or die("<span style=\"color:red;\">Could not fetch from database.<br/>".mysql_error()."</span>");
+	$db = @mysqli_fetch_array($query) or die("<span style=\"color:red;\">Could not fetch from database.<br/>".mysqli_connect_error()."</span>");
 	if (isset($db["headline"]) && $db["headline"]!="") $title .= " - ".$db["headline"];
   	else $title .= " - ".$db["header"]; 
   	

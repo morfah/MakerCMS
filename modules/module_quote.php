@@ -1,7 +1,7 @@
 <?php
 $sql = "SELECT * FROM quotes";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $week = date('W');
 $maxtries = 1;
 if ($fetch["random"]==1)

@@ -11,8 +11,8 @@ require_once "../includes/config.php"; // Database and Site settings
 //require_once "../includes/validate.php"; // Validation functions
 // timezone and charset
 $sql = "SELECT timezone,charset FROM `global` WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
@@ -35,13 +35,13 @@ if (isset($_POST["save"])){
 			$i = "0".$i;
 		$sql .= ", week".$i."='".$week[$i]."'";
 	}
-	@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	$what = "ok";
 }
 
 $sql = "SELECT * FROM quotes";
-$query = mysql_query($sql, $conn);
-$datas = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$datas = mysqli_fetch_array($query);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

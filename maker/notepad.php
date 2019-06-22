@@ -18,14 +18,14 @@ if (isset($_POST["todosave"])){
 	else $todo = '';
 
 	$sql = "UPDATE maker SET todo='".$todo."' WHERE id=".$_SESSION['sess_id'];
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 
 	$what = "saved";
 }
 
 $sql = "SELECT maker.todo,global.charset FROM maker,global WHERE global.id=1 AND maker.id=".$_SESSION['sess_id'];
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 ?>

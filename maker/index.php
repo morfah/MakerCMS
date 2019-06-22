@@ -11,8 +11,8 @@ require_once "../includes/config.php"; // Database connection
 require_once "../includes/validate.php"; // Validation Functions
 // timezone and charset
 $sql = "SELECT timezone,charset FROM `global` WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
@@ -21,22 +21,23 @@ if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
 if (isset($_POST['submit'])){
   if (valid($_POST['username'], 1, 20)){ 
 	  $sql = "SELECT * FROM maker WHERE username='" . $_POST['username'] . "' AND password='" . md5($_POST['password']) . "'";
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($conn, $sql);
 	 
 	  // If username and/or password wasn't found
 	  // send an error to the form
-	  if (mysql_num_rows($result) == 0){
+	  if (mysqli_num_rows($result) == 0){
 		header("Location: index.php?badlogin=1");
 		exit;
 	  }
 	 
 	  // Set session with unique index
-	  $_SESSION['sess_id'] = mysql_result($result, 0, 'id');
+	  $row = mysqli_fetch_assoc($result);
+	  $_SESSION['sess_id'] = $row['id'];
 	  $_SESSION['sess_user'] = $_POST['username'];
 	  $_SESSION['sess_pass'] = md5($_POST['password']);
 	  // Updating "last_login" 
 	  $sql2 = "UPDATE maker SET last_login = '" . date('Y-m-d H:i:s') . "' WHERE id=" . $_SESSION['sess_id'];
-	  @mysql_query($sql2) or die("error...");
+	  @mysqli_query($conn, $sql2) or die("error...");
 	  header("Location: frames.php"); // Redirecting to frames.php
 	  exit;
   } 

@@ -10,15 +10,15 @@ if (!isset($_SESSION['sess_user'])){
 require_once "../includes/config.php"; // Database and Site settings
 // charset
 $sql = "SELECT global.charset FROM global WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 
 if (isset($_POST["submit_clear"])){
 	$sql = "TRUNCATE TABLE `tracker`;";
 	//echo $sql;
-	mysql_query($sql, $conn) or die(mysql_error());	
+	mysqli_query($conn, $sql) or die(mysqli_connect_error());	
 }
 if (isset($_POST["submit_ips"]))
 	$_GET["showips"] = $_POST["select_ips"];
@@ -69,15 +69,17 @@ createCookie('showreferers',<?php echo $_GET["showreferers"]?>,7);
 		<tr><td class="sectionLinks">Visited URLs:</td><td class="sectionLinks">Hits:</td></tr>
 <?php
 	$sql = "SELECT URL , count(*) FROM tracker GROUP BY URL ORDER BY `count(*)` DESC LIMIT 0,".$_GET["showurls"];
-	$result = mysql_query($sql, $conn);
-	for ($i = 0; $i < mysql_num_rows($result); $i++){
-		$visited_url = mysql_result($result, $i, "URL");
-		$views = mysql_result($result, $i, "count(*)");
+	$result = mysqli_query($conn, $sql);
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		$visited_url = $row["URL"];
+		$views = $row["count(*)"];
 ?>
 		<tr><td class="relatedLinks"><a href="http://<?php echo $visited_url ?>" target="_blank">http://<?php echo $visited_url ?></a></td>
 		<td class="relatedLinks"><?php echo $views ?></td></tr>
 <?php
 	}
+
 //$exclude = str_ireplace("/","",str_ireplace("http://","",$url));
 $exclude = $url;
 ?>
@@ -93,16 +95,16 @@ $exclude = $url;
 		</form>
 		</td></tr>
 		
-		
 		<tr><td colspan="2">&nbsp;</td></tr>
 		<tr><td class="sectionLinks">Referer: <span style="font-weight:normal;">(excluding clicks from root url)</span></td><td class="sectionLinks">Clicks:</td></tr>
 <?php
 	//$sql = "SELECT referer , count(*) FROM tracker WHERE referer NOT LIKE '%$exclude%' GROUP BY referer ORDER BY `count(*)` DESC LIMIT 0,".$_GET["showreferers"];
 	$sql = "SELECT referer , count(*) FROM tracker WHERE referer != '$exclude' GROUP BY referer ORDER BY `count(*)` DESC LIMIT 0,".$_GET["showreferers"];
-	$result = mysql_query($sql, $conn);
-	for ($i = 0; $i < mysql_num_rows($result); $i++){
-		$referer = mysql_result($result, $i, "referer");
-		$views = mysql_result($result, $i, "count(*)");
+	$result = mysqli_query($conn, $sql);
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		$referer = $row["referer"];
+		$views = $row["count(*)"];
 ?>
 		<tr><td class="relatedLinks"><?php if ($referer == "n/a"): echo "(Direct Access / no known referrer)"; else: ?><a href="<?php echo $referer?>"><?php echo $referer?></a><?php endif;?></td>
 		<td class="relatedLinks"><?php echo $views ?></td></tr>
@@ -120,21 +122,20 @@ $exclude = $url;
 			<input type="submit" value="Go" name="submit_referers" />
 		</form>
 		</td></tr>
-		
-		
 <?php
-	$sql = "SELECT * FROM tracker GROUP BY IP";
-	$result = mysql_query($sql, $conn);
-	$views = mysql_num_rows($result);
+	$sql = "SELECT IP FROM tracker GROUP BY IP";
+	$result = mysqli_query($conn, $sql);
+	$views = mysqli_num_rows($result);
 ?>
 		<tr><td colspan="2">&nbsp;</td></tr>
 		<tr><td class="sectionLinks">Visitors IP adresses: <span style="font-weight:normal;">(<?php echo $views ?> unique IPs found)</span></td><td class="sectionLinks">Hits:</td></tr>
 <?php
 	$sql = "SELECT IP, count(*) FROM tracker GROUP BY IP ORDER BY `count(*)` DESC LIMIT 0,".$_GET["showips"];
-	$result = mysql_query($sql, $conn);
-	for ($i = 0; $i < mysql_num_rows($result); $i++){
-		$IP = mysql_result($result, $i, "IP");
-		$views = mysql_result($result, $i, "count(*)");
+	$result = mysqli_query($conn, $sql);
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		$IP = $row["IP"];
+		$views = $row["count(*)"];
 ?>
 		<tr><td class="relatedLinks"><a href="stats_ip.php?ip=<?php echo $IP ?>"><?php echo $IP ?></a></td><td class="relatedLinks"><?php echo $views ?></td></tr>
 <?php
@@ -151,8 +152,6 @@ $exclude = $url;
 			<input type="submit" value="Go" name="submit_ips" />
 		</form>
 		</td></tr>
-		
-		
 	</table>
 </body>
 </html>

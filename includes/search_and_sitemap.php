@@ -30,10 +30,10 @@ function search($searchword, $section, $charset){
 <h3>Search results: <a href="?search=<?php echo space2html($searchword); ?>"><?php echo $searchword ?></a></h3>
 <br />
 <?php
-	$query = mysql_query($sql, $conn) or die(mysql_error());
+	$query = mysqli_query($conn, $sql) or die(mysqli_connect_error());
 	$hits = 0;
 	$sid = 0;
-	while ($fetch = mysql_fetch_array($query)){
+	while ($fetch = mysqli_fetch_array($query)){
 		$hits++;
 		if ($sid <= $fetch["sid"]){
 			if ($sid < $fetch["sid"]){
@@ -82,8 +82,8 @@ function sitemap($section){
 	//echo "Sitemap sql = $sql<br />";
 	//echo "conn = $conn<br />";
 	
-	$query = mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
-	$hits = mysql_num_rows($query);
+	$query = mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+	$hits = mysqli_num_rows($query);
 	$sid = 0;
 ?>
 <h3><?php if (!isset($section_map)):?>Site<?php else:?>Section<?php endif;?> Map (<?php echo $hits ?> pages)</h3>
@@ -91,7 +91,7 @@ function sitemap($section){
 <?php
 	if ($hits==0)
 		echo "<div>&nbsp;";
-	while($fetch=mysql_fetch_array($query)){
+	while($fetch=mysqli_fetch_array($query)){
 		if ($sid <= $fetch["sid"]){
 			if ($sid < $fetch["sid"]){
 				if ($sid!=0)

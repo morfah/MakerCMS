@@ -13,8 +13,8 @@ require_once "classes/autoload.php"; // This autoload classes
 //Headadmin and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";

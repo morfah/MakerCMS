@@ -10,8 +10,8 @@ if (!isset($_SESSION['sess_user'])){
 require_once "../includes/config.php"; // Database and Site settings
 // charset
 $sql = "SELECT global.charset FROM global WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 
@@ -27,7 +27,7 @@ if (isset($_POST["change"])){
 	if ($oldpassword==$_SESSION["sess_pass"] && $newpassword == $newpasswordagain && strlen($_POST["newpassword"]) > 5) {
 		$_SESSION["sess_pass"] = $newpasswordagain;
 		$sql = "UPDATE maker SET password='" . $newpasswordagain . "' WHERE id=" . $_SESSION['sess_id'];
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		$what = "ok";
 	}
 	else

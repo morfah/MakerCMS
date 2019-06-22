@@ -10,8 +10,8 @@ if (!isset($_SESSION['sess_user'])){
 require_once "../includes/config.php"; // Database and Site settings
 // timezone and charset
 $sql = "SELECT timezone,charset FROM `global` WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
@@ -35,18 +35,19 @@ $cur_IP = $_GET['ip'];
 
 <?php
 	$sql = "SELECT * FROM tracker WHERE IP = '$cur_IP' ORDER BY date_auto DESC";
-	$result = mysql_query($sql, $conn);
-	for ($i = 0; $i < mysql_num_rows($result); $i++){
-		$url = mysql_result($result, $i, "URL");
-		$date_auto = mysql_result($result, $i, "date_auto");
+	$result = mysqli_query($conn, $sql);
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		$url = $row["URL"];
+		$date_auto = $row["date_auto"];
 		$date = date("Y-m-d H:i:s", $date_auto);
-		$browser = mysql_result($result, $i, "browser");
-		$referer = mysql_result($result, $i, "referer");
-?>
+		$browser = $row["browser"];
+		$referer = $row["referer"];
+?> 
 		<tr><td class="relatedLinks"><a href="http://<?php echo $url ?>" target="_blank">http://<?php echo $url ?></a></td>
 		<td class="relatedLinks"><?php echo $browser ?></td><td class="relatedLinks"><?php if ($referer != "n/a"){?><a href="<?php echo $referer ?>" target="_blank"><?php echo $referer ?></a><?php }else{?>n/a<?php }?></td><td class="relatedLinks"><?php echo $date ?></td></tr>
 <?php
-	}
+    }
 ?>
 </table>
 </body>

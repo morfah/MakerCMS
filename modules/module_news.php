@@ -4,11 +4,11 @@ $sql = 'SELECT news.*, maker.username AS authorname'
 	. ' WHERE news.author = maker.id'
 	. ' AND news.deleted!=1'
 	. ' ORDER BY news.id DESC';
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$db=mysql_fetch_array($query);
+	$db=mysqli_fetch_array($query);
 	$id = $db["id"]; $headline = $db["headline"]; $news = $db["news"]; 
 	echo "<!-- News id: $id - Start -->\n";
 	echo "<div class=\"newscontainer\">\n";

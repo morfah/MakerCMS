@@ -12,8 +12,8 @@ require_once "../includes/config.php"; // Database connection
 // Headadmin, timezone and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, T3.timezone, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
@@ -53,19 +53,19 @@ if (isset($_POST["savesection"])){
 		$what = "Updated";
 	}
 
-	@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 
 	// This assigns the correct order number and add adminrights for this newly added section.
 	if ($what == "Posted"){
 		$sql = "SELECT sid FROM sections WHERE deleted=0";
-		$query = mysql_query($sql, $conn);
-		$rows = mysql_num_rows($query);
+		$query = mysqli_query($conn, $sql);
+		$rows = mysqli_num_rows($query);
 		$sql = "SELECT * FROM sections ORDER BY sid DESC LIMIT 0,1";
-		$query = mysql_query($sql, $conn);
-		$db = mysql_fetch_array($query);
+		$query = mysqli_query($conn, $sql);
+		$db = mysqli_fetch_array($query);
 		$sidmax = $db["sid"];
 		$sql = "UPDATE `sections` SET `order` = $rows WHERE `sid` = $sidmax";
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		header("Location: editors.php?sid=$sidmax&refresh=yes"); // Open this section in Editor
 	}
 }
@@ -74,17 +74,17 @@ if (isset ($_POST["delete"])) {
 	if (isset ($_GET["sid"])) $sid = $_GET["sid"];
 	else $sid = "";
 	$sql = "UPDATE `sections` SET `deleted` = 1, `order` = 0 WHERE `sid` = $sid";
-	@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	$what = "Deleted";
 	//echo "Deletion SQL: <br />\n$sql<br /><br />\nRe-ordering SQLS: <br />\n";
 	// Re-Order current alive pages. This fixes wholes in order.
 	$sql = "SELECT * FROM `sections` WHERE `deleted` = 0";
-	$rows = mysql_num_rows(mysql_query($sql, $conn));
+	$rows = mysqli_num_rows(mysqli_query($conn, $sql));
 	for ($i=1;$i<=$rows;$i++){
 		$sql_sid = "SELECT `sid` FROM `sections` WHERE `deleted` = 0 ORDER BY `order` ASC LIMIT ".($i-1).",1";
-		$fetch_sid = mysql_fetch_array(mysql_query($sql_sid, $conn));
+		$fetch_sid = mysqli_fetch_array(mysqli_query($conn, $sql_sid));
 		$sql = "UPDATE `sections` SET `order` = $i WHERE `sid` = ".$fetch_sid["sid"];
-		@mysql_query($sql, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		//echo "$sql<br />\n";
 	}
 	//exit();
@@ -101,14 +101,14 @@ if (isset($_GET["sid"])){
 
 	//started by
 	$sql = "SELECT maker.username AS startedby_name, sections.startedby AS startedby FROM maker, sections WHERE maker.id = startedby AND sections.sid = ".$_GET["sid"];
-	$query = mysql_query($sql, $conn);
-	$datas2 = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql);
+	$datas2 = mysqli_fetch_array($query);
 	if (!isset($datas2["startedby_name"])) $datas2["startedby_name"] = "&lt;unknown&gt;";
 
 	//updated by
 	$sql = "SELECT maker.username AS updatedby_name, sections.startedby AS updatedby FROM maker, sections WHERE maker.id = updatedby AND sections.sid = ".$_GET["sid"];
-	$query = mysql_query($sql, $conn);
-	$datas3 = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql);
+	$datas3 = mysqli_fetch_array($query);
 	if (!isset($datas3["updatedby_name"])) $datas3["updatedby_name"] = "&lt;unknown&gt;";
 
 	// Fetching the section, if the admin has permission to it.
@@ -119,11 +119,10 @@ if (isset($_GET["sid"])){
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
     		) OR (
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-        ))
-        GROUP BY sections.sid";
+        ))";
 
-	$query = mysql_query($sql, $conn);
-	$datas = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql) or die($sql);
+	$datas = mysqli_fetch_array($query);
 }
 else
 	$edit=false;
@@ -149,7 +148,7 @@ function refresh_ce(){
 <?php if (isset($what) or isset($_GET["refresh"])){?>
 <script type="text/javascript">refresh_ce();</script>
 <?php }?>
-<?php if (($edit && mysql_num_rows($query) == 0) || !$headadmin){?>
+<?php if (($edit && mysqli_num_rows($query) == 0) || !$headadmin){?>
 <div class="infobox error">This section does not exist, or you don't have permission to edit it.</div>
 <?php }else{?>
 <script type="text/javascript">

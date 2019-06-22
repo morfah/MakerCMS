@@ -12,27 +12,27 @@ require_once "../includes/config.php"; // Database connection
 // Headadmin and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 
 if (isset($_GET["ascend"]) AND $_GET["ascend"] > 1){
 	$sql = "UPDATE `content` SET `order`=".$_GET["ascend"]." WHERE `order`=".($_GET["ascend"] - 1)." AND `sid`=".$_GET["sid"].";";
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 	$sql = "UPDATE `content` SET `order`=".($_GET["ascend"] - 1)." WHERE `id`=".$_GET["id"]." AND `sid`=".$_GET["sid"].";";
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 }
 elseif (isset($_GET["descend"])){
 	$sql = "SELECT COUNT(*) AS `rows` FROM `content` WHERE `sid`=".$_GET["sid"]." GROUP BY `sid`;";
-	$db = mysql_fetch_array(mysql_query($sql, $conn));
+	$db = mysqli_fetch_array(mysqli_query($conn, $sql));
 	$rows = $db["rows"];
 	if ($_GET["descend"] != $rows){
 		$sql = "UPDATE `content` SET `order`=".$_GET["descend"]." WHERE `order`=".($_GET["descend"] + 1)." AND `sid`=".$_GET["sid"].";";
-		@mysql_query($sql, $conn) or die("error while transfering");
+		@mysqli_query($conn, $sql) or die("error while transfering");
 		$sql = "UPDATE `content` SET `order`=".($_GET["descend"] + 1)." WHERE `id`=".$_GET["id"]." AND `sid`=".$_GET["sid"].";";
-		@mysql_query($sql, $conn) or die("error while transfering");
+		@mysqli_query($conn, $sql) or die("error while transfering");
 	}
 }
 ?>
@@ -84,12 +84,12 @@ AND ((
 		) OR (
 		permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
 	))
-	GROUP BY sections.sid ORDER BY `order`";
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+    ORDER BY sections.`order`";
+$query = mysqli_query($conn, $sql) or die($sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-$fetch=mysql_fetch_array($query);
+$fetch=mysqli_fetch_array($query);
 $tempsid = $fetch["sid"];
 ?>
 	<!--SECTION BEGIN-->
@@ -113,10 +113,10 @@ $tempsid = $fetch["sid"];
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 <?php
 		$sql2 = "SELECT id,sid,`order`,header,url,visible,disabled FROM content WHERE sid=".$tempsid." AND deleted=0 ORDER BY `order` ASC, `header` ASC";
-		$query2 = mysql_query($sql2, $conn);
-		$rows2 = mysql_num_rows($query2);
+		$query2 = mysqli_query($conn, $sql2);
+		$rows2 = mysqli_num_rows($query2);
 		for ($i2=0;$i2<$rows2;$i2++){
-		$fetch2=mysql_fetch_array($query2);
+		$fetch2=mysqli_fetch_array($query2);
 ?>
 			<tr>
 				<!-- Page/Url -->

@@ -13,8 +13,8 @@ require_once "classes/autoload.php"; // autoload classes
 // Headadmin, timezone and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, T3.timezone, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
@@ -123,14 +123,14 @@ if (isset($_GET["id"])){
 	$edit=true;
 	// Started by
 	$sql = "SELECT maker.username AS startedby_name, content.startedby AS startedby FROM maker, content WHERE maker.id = startedby AND content.id = ".$_GET["id"];
-	$query = mysql_query($sql, $conn);
-	$datas2 = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql);
+	$datas2 = mysqli_fetch_array($query);
 	if (!isset($datas2["startedby_name"])) $datas2["startedby_name"] = "&lt;unknown&gt;";
 
 	// Updated by
 	$sql = "SELECT maker.username AS updatedby_name, content.startedby AS updatedby FROM maker, content WHERE maker.id = updatedby AND content.id = ".$_GET["id"];
-	$query = mysql_query($sql, $conn);
-	$datas3 = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql);
+	$datas3 = mysqli_fetch_array($query);
 	if (!isset($datas3["updatedby_name"])) $datas3["updatedby_name"] = "&lt;unknown&gt;";
 
 	// Fetching the url, if the admin has permission to it.
@@ -141,11 +141,9 @@ if (isset($_GET["id"])){
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
     		) OR (
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = content.sid AND permissions.permissions = 1
-        ))
-        GROUP BY content.id";
-	$query = mysql_query($sql, $conn);
-	$datas = mysql_fetch_array($query);
-
+        ))";
+	$query = mysqli_query($conn, $sql);
+	$datas = mysqli_fetch_array($query);
 }
 
 // New url.
@@ -160,10 +158,9 @@ else{
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
     		) OR (
               permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-        ))
-        GROUP BY sections.sid";
+        ))";
 
-	$query = mysql_query($sql, $conn);
+	$query = mysqli_query($conn, $sql);
 }
 $title = "URL editor"; // Title
 
@@ -186,7 +183,7 @@ function refresh_ce(){
 <?php if (isset($what) || isset($_GET["refresh"])){?>
 <script type="text/javascript">refresh_ce();</script>
 <?php }?>
-<?php if (mysql_num_rows($query) == 0 || !isset($_GET["sid"])){?>
+<?php if (mysqli_num_rows($query) == 0 || !isset($_GET["sid"])){?>
 <div class="infobox error">This url does not exist, or you don't have permission to edit it.</div>
 <?php } else {?>
 
@@ -267,11 +264,11 @@ if ($edit){
 			) OR (
 			permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
 		))
-		GROUP BY sections.sid ORDER BY `order`";
-	$query2 = mysql_query($sql2, $conn);
-	$rows2 = mysql_num_rows($query2);
+		ORDER BY `order`";
+	$query2 = mysqli_query($conn, $sql2) or die($sql);
+	$rows2 = mysqli_num_rows($query2);
 	for ($i2=0;$i2<$rows2;$i2++){
-		$fetch2=mysql_fetch_array($query2);
+		$fetch2=mysqli_fetch_array($query2);
 ?>
 			<option value="<?php echo $fetch2["sid"] ?>" <?php if ($fetch2["sid"] == $_GET["sid"]) echo "selected=\"selected\"";?>><?php echo $fetch2["header"]?></option>
 <?php

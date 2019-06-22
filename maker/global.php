@@ -26,7 +26,7 @@ if (isset($_POST["submit"])){
 	else $timezone = date_default_timezone_get();
 
 	$sql = "UPDATE global SET site_url='$site_url', site_name='$site_name', meta_author='$meta_author', meta_description='$meta_description', meta_keywords='$meta_keywords', charset='$charset', timezone='$timezone' WHERE id=1";
-	@mysql_query($sql, $conn) or die(mysql_error());
+	@mysqli_query($conn, $sql) or die(mysqli_connect_error());
 	// This line must be before all references to date() to silence strict php notices.
 	//date_default_timezone_set("$timezone");
 
@@ -35,8 +35,8 @@ if (isset($_POST["submit"])){
 
 $sql = "SELECT T1.id, T1.name, T3.*, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
 unset($sql);
 

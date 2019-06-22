@@ -11,8 +11,8 @@ require_once "../includes/config.php"; // Database and Site settings
 require_once "../includes/validate.php"; // Validation functions
 // timezone and charset
 $sql = "SELECT timezone,charset FROM `global` WHERE global.id=1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
 if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
@@ -78,25 +78,25 @@ if (isset($_POST["submit"])){
 	else{
 		$sql = "INSERT INTO news (headline,news,author,time,updatedtime) VALUES ('".htmlentities($_POST["headline"],ENT_QUOTES,$charset)."','".$_POST["news"]."',".$_SESSION['sess_id'].",".time().",".time().")";
 	}
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 }
 elseif(isset($_POST["submit_hide"])){
 	$sql = "UPDATE news SET deleted=1 WHERE id=".$_GET["hide"];
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 }
 elseif(isset($_POST["submit_show"])){
 	$sql = "UPDATE news SET deleted=0 WHERE id=".$_GET["show"];
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 }
 elseif(isset($_POST["submit_delete"])){
 	$sql = "DELETE FROM news WHERE id=".$_GET["delete"];
-	@mysql_query($sql, $conn) or die("error while transfering");
+	@mysqli_query($conn, $sql) or die("error while transfering");
 }
 if (isset($_GET["edit"])){
 	$edit=true;
 	$sql = "SELECT * FROM news WHERE id=".$_GET["edit"];
-	$query = mysql_query($sql, $conn);
-	$db = mysql_fetch_array($query);
+	$query = mysqli_query($conn, $sql);
+	$db = mysqli_fetch_array($query);
 }
 else
 	$edit=false;
@@ -138,10 +138,10 @@ $sql = 'SELECT news.*, maker.username AS authorname'
 . ' FROM news, maker'
 . ' WHERE news.author = maker.id'
 . ' ORDER BY news.id DESC';
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 for ($i=0;$i<$rows;$i++){
-$db=mysql_fetch_array($query);
+$db=mysqli_fetch_array($query);
 if ($edit && $db["id"]==$_GET["edit"]){
 	$style = "color:#00F;background-color:#ffffcc;";
 	if ($db["deleted"]==1) $style = "color:#aaf;background-color:#ffffcc;";

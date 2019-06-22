@@ -12,8 +12,8 @@ require_once "../includes/config.php"; // Database and Site settings
 // Headadmin, timezone and charset
 $sql = "SELECT T1.id, T1.name, T3.charset, T3.timezone, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3 WHERE T1.id = 1 AND T3.id = 1";
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
 else $charset = "utf-8";
@@ -21,7 +21,7 @@ if ($fetch["timezone"]!="") date_default_timezone_set($fetch["timezone"]);
 
 // How many non-trashcanned sections do we have?
 $sql = "SELECT * FROM sections WHERE deleted = 0";
-$rows = mysql_num_rows(mysql_query($sql, $conn));
+$rows = mysqli_num_rows(mysqli_query($conn, $sql));
 
 // Saving.
 if ($headadmin && isset($_POST["submit"])){
@@ -30,7 +30,7 @@ if ($headadmin && isset($_POST["submit"])){
 	//echo "Saving section settings. Section by section.<br />\n";
 	for ($i=1;$i<=$rows;$i++) {
 		$sql = "SELECT * FROM sections WHERE deleted = 0 LIMIT ".($i-1).",1";
-		$fetch = mysql_fetch_array(mysql_query($sql, $conn));
+		$fetch = mysqli_fetch_array(mysqli_query($conn, $sql));
 		$sid = $fetch["sid"];
 		if (isset($_POST["order"."$sid"])) $order = $_POST["order"."$sid"];
 		else $order = 0;
@@ -40,7 +40,7 @@ if ($headadmin && isset($_POST["submit"])){
 		else $dis = 0;
 		$sql2 = "UPDATE sections SET `order`=$order, visible=$vis, disabled=$dis, updatedby='$updatedby', updatedby_date='$date' WHERE sid=$sid";
 		//echo "$sql2<br />\n";
-		@mysql_query($sql2, $conn) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+		@mysqli_query($conn, $sql2) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	}
 	$what = "ok";
 }
@@ -80,8 +80,8 @@ if (!$headadmin){
 for ($i=1;$i<=$rows;$i++) {
 
 $sql = "SELECT * FROM sections WHERE deleted = 0 ORDER BY `order` LIMIT ".($i-1).",1";
-$query = mysql_query($sql, $conn);
-$datas=mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$datas=mysqli_fetch_array($query);
 
 ?>
 	<tr>

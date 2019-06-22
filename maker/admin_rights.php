@@ -14,8 +14,8 @@ require_once "classes/autoload.php"; // This autoloads classes
 // Headadmin, charset and the username for the admin we are editing
 $sql = "SELECT T1.id, T1.name, T3.charset, T4.username, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_SESSION["sess_id"].") AS headadmin
 		FROM permissions_extra AS T1, global AS T3, maker as T4 WHERE T1.id = 1 AND T3.id = 1 AND T4.id =" . $_GET ["id"];
-$query = mysql_query($sql, $conn);
-$fetch = mysql_fetch_array($query);
+$query = mysqli_query($conn, $sql);
+$fetch = mysqli_fetch_array($query);
 $headadmin = $fetch["headadmin"];
 $username = $fetch ["username"];
 if ($fetch["charset"]!="") $charset = $fetch["charset"];
@@ -90,11 +90,11 @@ else{
 		// EXTRA PERMISSIONS
 		$sql = "SELECT T1.id, T1.name, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = 0 AND T2.permissions = T1.id AND T2.uid=".$_GET["id"].") AS granted
 				FROM permissions_extra AS T1";
-		$query = mysql_query($sql, $conn);
-		$rows = mysql_num_rows($query);
+		$query = mysqli_query($conn, $sql);
+		$rows = mysqli_num_rows($query);
 
 		for ($i=0;$i<$rows;$i++){
-		$fetch=mysql_fetch_array($query);
+		$fetch=mysqli_fetch_array($query);
 ?>
 			<tr>
 				<td colspan="2" class="relatedLinks"><strong><?php echo $fetch["name"]; ?></strong></td>
@@ -112,10 +112,10 @@ else{
 		// SECTION PERMISSIONS
 		$sql = "SELECT T1.sid, T1.header, T1.deleted, (SELECT COUNT(*) FROM permissions AS T2 WHERE T2.sid = T1.sid AND T2.uid=".$_GET["id"].") AS granted
 				FROM sections AS T1 ORDER BY T1.deleted ASC, T1.order ASC";
-		$query = mysql_query($sql, $conn);
-		$rows = mysql_num_rows($query);
+		$query = mysqli_query($conn, $sql);
+		$rows = mysqli_num_rows($query);
 		for ($i=1;$i<=$rows;$i++){
-		$fetch=mysql_fetch_array($query);
+		$fetch=mysqli_fetch_array($query);
 ?>
 			<tr>
 				<td class="relatedLinks"><?php echo $fetch["header"]?></td>

@@ -7,11 +7,11 @@ $sql = "SELECT `content` . *"
 	. " AND content . disabled = 0"
 	. " AND sections . deleted = 0"
 	. " ORDER BY content.sid,content.id ASC";
-$query = mysql_query($sql, $conn);
-$rows = mysql_num_rows($query);
+$query = mysqli_query($conn, $sql);
+$rows = mysqli_num_rows($query);
 
 for ($i=0;$i<$rows;$i++){
-	$fetch=mysql_fetch_array($query);
+	$fetch=mysqli_fetch_array($query);
 	$sid = $fetch["sid"]; $id = $fetch["id"]; $headline = $fetch["headline"]; $pagename = $fetch["header"];
 	if (isset($headline) && $headline!="") $title = $headline;
   	else $title = $pagename;
