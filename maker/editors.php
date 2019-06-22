@@ -113,13 +113,15 @@ if (isset($_GET["sid"])){
 
 	// Fetching the section, if the admin has permission to it.
     $sql = "SELECT sections.*
-    FROM sections, permissions
+    FROM sections
     WHERE sections.sid = ".$_GET["sid"]."
-    AND ((
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
-    		) OR (
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-        ))";
+    AND (SELECT COUNT(*) FROM permissions WHERE 
+	((permissions.uid = ".$_SESSION['sess_id']."
+	AND permissions.sid = 0
+	AND permissions.permissions = 1)
+	OR (permissions.uid = ".$_SESSION['sess_id']."
+	AND permissions.sid = sections.sid
+	AND permissions.permissions = 1))) > 0";
 
 	$query = mysqli_query($conn, $sql) or die($sql);
 	$datas = mysqli_fetch_array($query);

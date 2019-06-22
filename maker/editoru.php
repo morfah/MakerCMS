@@ -135,13 +135,15 @@ if (isset($_GET["id"])){
 
 	// Fetching the url, if the admin has permission to it.
     $sql = "SELECT content.*
-    FROM content, permissions
+    FROM content
     WHERE (content.sid = ".$_GET["sid"]." AND content.id = ".$_GET["id"]." AND content.url = 1)
-    AND ((
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
-    		) OR (
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = content.sid AND permissions.permissions = 1
-        ))";
+    AND (SELECT COUNT(*) FROM permissions WHERE 
+        ((permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = 0
+        AND permissions.permissions = 1)
+        OR (permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = content.sid
+        AND permissions.permissions = 1))) > 0";
 	$query = mysqli_query($conn, $sql);
 	$datas = mysqli_fetch_array($query);
 }
@@ -152,13 +154,15 @@ else{
 
 	// Checking if this admin can create a url on this section.
     $sql = "SELECT sections.*
-    FROM sections, permissions
+    FROM sections
     WHERE sections.sid = ".$_GET["sid"]."
-    AND ((
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
-    		) OR (
-              permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-        ))";
+    AND (SELECT COUNT(*) FROM permissions WHERE 
+	((permissions.uid = ".$_SESSION['sess_id']."
+	AND permissions.sid = 0
+	AND permissions.permissions = 1)
+	OR (permissions.uid = ".$_SESSION['sess_id']."
+	AND permissions.sid = sections.sid
+	AND permissions.permissions = 1))) > 0";
 
 	$query = mysqli_query($conn, $sql);
 }
@@ -257,13 +261,15 @@ if ($edit){
 	    <select name="moveurl">
 <?php
 	$sql2 = "SELECT sections.*
-	FROM sections, permissions
+	FROM sections
 	WHERE sections.deleted != 1
-	AND ((
-			permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
-			) OR (
-			permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-		))
+	AND (SELECT COUNT(*) FROM permissions WHERE 
+        ((permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = 0
+        AND permissions.permissions = 1)
+        OR (permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = sections.sid
+        AND permissions.permissions = 1))) > 0
 		ORDER BY `order`";
 	$query2 = mysqli_query($conn, $sql2) or die($sql);
 	$rows2 = mysqli_num_rows($query2);

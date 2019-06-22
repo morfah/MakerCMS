@@ -77,13 +77,15 @@ function togglelayer(layerid){
 	</tr>
 <?php
 $sql = "SELECT sections.*
-FROM sections, permissions
+FROM sections
 WHERE sections.deleted != 1
-AND ((
-		permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = 0 AND permissions.permissions = 1
-		) OR (
-		permissions.uid = ".$_SESSION['sess_id']." AND permissions.sid = sections.sid AND permissions.permissions = 1
-	))
+AND (SELECT COUNT(*) FROM permissions WHERE 
+        ((permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = 0
+        AND permissions.permissions = 1)
+        OR (permissions.uid = ".$_SESSION['sess_id']."
+        AND permissions.sid = sections.sid
+        AND permissions.permissions = 1))) > 0
     ORDER BY sections.`order`";
 $query = mysqli_query($conn, $sql) or die($sql);
 $rows = mysqli_num_rows($query);
