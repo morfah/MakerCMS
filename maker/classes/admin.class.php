@@ -8,7 +8,7 @@ class admin {
 
       // Add admin
       $sql = "INSERT INTO maker (username, password) VALUES ('$username', MD5('$password'))";
-      @mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (". mysqli_connect_errno() . ") " . mysqli_connect_error());
+      @mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (". mysqli_connect_errno() . ") " . mysqli_connect_error());
 
     } else {
       $this->ErrorMsg = "<div class=\"infobox error\">You must type a username and the password at least 6 characters long.</div>";
@@ -19,7 +19,7 @@ class admin {
     require "../includes/config.php";
 
     $sql = "DELETE maker FROM maker WHERE id=$id";
-    @mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+    @mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 
     $this->ClearPermissions($id);
   }
@@ -28,7 +28,7 @@ class admin {
     require "../includes/config.php";
 
     $sql = "UPDATE maker SET username='$newname' WHERE id=$id";
-    @mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+    @mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 
     // Did you rename yourself? Fix session username if so.
     if ($id == $_SESSION ["sess_id"]) $_SESSION ["sess_user"] = $newname;
@@ -49,8 +49,8 @@ class admin {
     require "../includes/config.php";
 
     $sql = "DELETE permissions FROM permissions WHERE uid = $UserID";
-    //echo $sql . "<br />";
-    @mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+    //echo $sql . "<br>";
+    @mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
   }
 
   public function AddPermissions($UserID, $Section, $Granted) {
@@ -60,8 +60,8 @@ class admin {
     if ($Granted > 0)
       $sql = "INSERT INTO permissions (uid, sid, permissions) VALUES($UserID, $Section, $Granted)";
 
-    //echo $sql . "<br />";
-    @mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+    //echo $sql . "<br>";
+    @mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
   }
 
 }

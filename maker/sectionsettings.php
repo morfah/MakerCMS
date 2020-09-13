@@ -27,7 +27,7 @@ $rows = mysqli_num_rows(mysqli_query($conn, $sql));
 if ($headadmin && isset($_POST["submit"])){
 	$date = date('Y-m-d H:i:s');
 	$updatedby = $_SESSION["sess_id"];
-	//echo "Saving section settings. Section by section.<br />\n";
+	//echo "Saving section settings. Section by section.<br>\n";
 	for ($i=1;$i<=$rows;$i++) {
 		$sql = "SELECT * FROM sections WHERE deleted = 0 LIMIT ".($i-1).",1";
 		$fetch = mysqli_fetch_array(mysqli_query($conn, $sql));
@@ -39,15 +39,14 @@ if ($headadmin && isset($_POST["submit"])){
 		if (isset($_POST["dis"."$sid"])) $dis = $_POST["dis"."$sid"];
 		else $dis = 0;
 		$sql2 = "UPDATE sections SET `order`=$order, visible=$vis, disabled=$dis, updatedby='$updatedby', updatedby_date='$date' WHERE sid=$sid";
-		//echo "$sql2<br />\n";
-		@mysqli_query($conn, $sql2) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		//echo "$sql2<br>\n";
+		@mysqli_query($conn, $sql2) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	}
 	$what = "ok";
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title>Section editor</title>
@@ -101,7 +100,7 @@ $datas=mysqli_fetch_array($query);
 ?>
 	<tr><td colspan="4">&nbsp;</td></tr>
 	<tr><td colspan="4" align="right"><input name="submit" type="submit" value="Save" /></td></tr>
-	<tr><td colspan="4" align="right"><br />
+	<tr><td colspan="4" align="right"><br>
 <?php
 	if (isset($what)){
 		if ($what == "ok"){
@@ -115,10 +114,10 @@ $datas=mysqli_fetch_array($query);
 </table>
 </form>
 
-<br /><br />
+<br><br>
 <div class="infobox">
-  Order: Order of appearance shown in menus<br /><br />
-  Visible: Will it be shown in menus?<br /><br />
+  Order: Order of appearance shown in menus<br><br>
+  Visible: Will it be shown in menus?<br><br>
   Disabled: Can't be accessed on the site and hidden from sitemap and search.
 </div>
 

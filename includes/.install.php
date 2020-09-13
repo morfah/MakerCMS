@@ -1,8 +1,8 @@
 <?php
 	$version = file_get_contents("../maker/.version");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Maker CMS v<?php echo $version?></title>
@@ -20,7 +20,7 @@ body {
 
 <body>
 <?php if (isset($_POST["install"])) {?>
-<strong>Installation initiated.</strong><br /><br />
+<strong>Installation initiated.</strong><br><br>
 
 <?php
 if (isset($_POST["url"])) $url = $_POST["url"];
@@ -42,7 +42,7 @@ $config .= "\$mysql_user = \"" . $mysql_user . "\";\n";
 $config .= "\$mysql_password = \"" . $mysql_password . "\";\n";
 $config .= "\$mysql_database = \"" . $mysql_database . "\";\n";
 $config .= "\n";
-$config .= "\$conn = mysqli_connect(\$mysql_server, \$mysql_user, \$mysql_password, \$mysql_database) or die(\"<br /><span style=\\\"color:red\\\">Could not connect to database and/or table. Please check \\\"includes\\\\config.php\\\"</span><br /><br /><b>A fatal MySQL error occurred</b>.\\n<br />\\nError: (\" . mysqli_connect_errno() . \") \" . mysqli_connect_error());\n";
+$config .= "\$conn = mysqli_connect(\$mysql_server, \$mysql_user, \$mysql_password, \$mysql_database) or die(\"<br><span style=\\\"color:red\\\">Could not connect to database and/or table. Please check \\\"includes\\\\config.php\\\"</span><br><br><strong>A fatal MySQL error occurred</strong>.\\n<br>\\nError: (\" . mysqli_connect_errno() . \") \" . mysqli_connect_error());\n";
 $config .= "unset(\$mysql_server,\$mysql_user,\$mysql_password);\n";
 $config .= "?>";
 
@@ -50,12 +50,12 @@ $fp = fopen("config.php", "w") or die("<span style=\"color:red;background-color:
 fwrite($fp, $config);
 fclose($fp);
 ?>
-<span style="color:green;background-color:inherit;">[OK]</span> Succesfully created config file.<br />
+<span style="color:green;background-color:inherit;">[OK]</span> Succesfully created config file.<br>
 <?php
 if (isset($_POST["adminname"])) $adminname = $_POST["adminname"];
 if (isset($_POST["adminpassword"])) $adminpassword = $_POST["adminpassword"];
 if (isset($_POST["timezone"])) $timezone = $_POST["timezone"];
-$table_error_message = "<span style=\"color:red;background-color:inherit;\">[FAIL]</span> Could not add necessary data to database!<br /><br /><b>A fatal MySQL error occurred</b>.\n<br />\n";
+$table_error_message = "<span style=\"color:red;background-color:inherit;\">[FAIL]</span> Could not add necessary data to database!<br><br><strong>A fatal MySQL error occurred</strong>.\n<br>\n";
 	require_once "config.php";
 	$sqlErrorText = '';
 	$sqlErrorCode = 0;
@@ -82,7 +82,7 @@ $table_error_message = "<span style=\"color:red;background-color:inherit;\">[FAI
 	}
 
 	if ($sqlErrorCode == 0){
-		echo "<span style=\"color:green;background-color:inherit;\">[OK]</span> Succesfully installed database tables.<br />";
+		echo "<span style=\"color:green;background-color:inherit;\">[OK]</span> Succesfully installed database tables.<br>";
 		//Adding necessary data to database.
 		//Global site settings
 		mysqli_query($conn, "INSERT INTO `".$mysql_database."`.`global` (`id`, `version`, `site_url`, `site_name`, `meta_author`, `meta_description`, `meta_keywords`, `charset`, `timezone`) VALUES ('1', '".$version."', '".$url."', '".$sitename."', '', '', '', '', '".$timezone."');") or die ($table_error_message . "Error: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
@@ -100,13 +100,13 @@ $table_error_message = "<span style=\"color:red;background-color:inherit;\">[FAI
 		//Just add a quote, or else stuff breaks
 		mysqli_query($conn, "INSERT INTO `".$mysql_database."`.`quotes` (`week01`, `week02`, `week03`, `week04`, `week05`, `week06`, `week07`, `week08`, `week09`, `week10`, `week11`, `week12`, `week13`, `week14`, `week15`, `week16`, `week17`, `week18`, `week19`, `week20`, `week21`, `week22`, `week23`, `week24`, `week25`, `week26`, `week27`, `week28`, `week29`, `week30`, `week31`, `week32`, `week33`, `week34`, `week35`, `week36`, `week37`, `week38`, `week39`, `week40`, `week41`, `week42`, `week43`, `week44`, `week45`, `week46`, `week47`, `week48`, `week49`, `week50`, `week51`, `week52`, `random`) VALUES ('test', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0');") or die ($table_error_message . "Error: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		// ALL DONE
-		echo "<span style=\"color:green;background-color:inherit;\">[OK]</span> Added necessary data to database.<br />";
-		echo "<br /><strong>Done!</strong> Don't forget to delete or rename install.php<br /><br /><a href=\"".$url."\">Visit your new website!</a>";
+		echo "<span style=\"color:green;background-color:inherit;\">[OK]</span> Added necessary data to database.<br>";
+		echo "<br><strong>Done!</strong> Don't forget to delete or rename install.php<br><br><a href=\"".$url."\">Visit your new website!</a>";
 		} else {
-		echo "<span style=\"color:red;background-color:inherit;\">[FAIL]</span> An error occured during installation!<br /><br />";
-		echo "Error code: $sqlErrorCode <br/>";
-		echo "Error text: $sqlErrorText <br/>";
-		echo "Statement:<br/> $sqlStmt <br/>";
+		echo "<span style=\"color:red;background-color:inherit;\">[FAIL]</span> An error occured during installation!<br><br>";
+		echo "Error code: $sqlErrorCode <br>";
+		echo "Error text: $sqlErrorText <br>";
+		echo "Statement:<br> $sqlStmt <br>";
 	}
 
 } elseif (!file_exists("config.php")) {
@@ -145,7 +145,7 @@ $table_error_message = "<span style=\"color:red;background-color:inherit;\">[FAI
 		<td class="relatedLinks"><input name="mysqlserver" type="text" id="mysqlserver" tabindex="3" style="width:200px" /></td>
 	</tr>
 	<tr>
-		<td class="relatedLinks">Mysql database:<br />
+		<td class="relatedLinks">Mysql database:<br>
 			(Must exist and should be empty)</td>
 		<td class="relatedLinks"><input name="mysqldatabase" type="text" id="mysqldatabase" tabindex="3" style="width:200px" /></td>
 	</tr>

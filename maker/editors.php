@@ -53,7 +53,7 @@ if (isset($_POST["savesection"])){
 		$what = "Updated";
 	}
 
-	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+	@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 
 	// This assigns the correct order number and add adminrights for this newly added section.
 	if ($what == "Posted"){
@@ -65,7 +65,7 @@ if (isset($_POST["savesection"])){
 		$db = mysqli_fetch_array($query);
 		$sidmax = $db["sid"];
 		$sql = "UPDATE `sections` SET `order` = $rows WHERE `sid` = $sidmax";
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		header("Location: editors.php?sid=$sidmax&refresh=yes"); // Open this section in Editor
 	}
 }
@@ -74,9 +74,9 @@ if (isset ($_POST["delete"])) {
 	if (isset ($_GET["sid"])) $sid = $_GET["sid"];
 	else $sid = "";
 	$sql = "UPDATE `sections` SET `deleted` = 1, `order` = 0 WHERE `sid` = $sid";
-	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+	@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	$what = "Deleted";
-	//echo "Deletion SQL: <br />\n$sql<br /><br />\nRe-ordering SQLS: <br />\n";
+	//echo "Deletion SQL: <br>\n$sql<br><br>\nRe-ordering SQLS: <br>\n";
 	// Re-Order current alive pages. This fixes wholes in order.
 	$sql = "SELECT * FROM `sections` WHERE `deleted` = 0";
 	$rows = mysqli_num_rows(mysqli_query($conn, $sql));
@@ -84,8 +84,8 @@ if (isset ($_POST["delete"])) {
 		$sql_sid = "SELECT `sid` FROM `sections` WHERE `deleted` = 0 ORDER BY `order` ASC LIMIT ".($i-1).",1";
 		$fetch_sid = mysqli_fetch_array(mysqli_query($conn, $sql_sid));
 		$sql = "UPDATE `sections` SET `order` = $i WHERE `sid` = ".$fetch_sid["sid"];
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
-		//echo "$sql<br />\n";
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		//echo "$sql<br>\n";
 	}
 	//exit();
 	header("Location: trashcan.php?fromeditor=yes");
@@ -132,9 +132,8 @@ else
 $title = "Section editor"; // Title
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title><?php echo $title;?></title>
@@ -202,16 +201,16 @@ function refresh_ce(){
 
 <?php if ($edit) {?>
 	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">Originally written by <b><?php echo $datas2["startedby_name"]; ?></b>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
+	<tr><td colspan="2">Originally written by <strong><?php echo $datas2["startedby_name"]; ?></strong>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
 <?php if ($datas["updatedby"]!="") {?>
-	<tr><td colspan="2">Last updated by <b><?php echo $datas3["updatedby_name"]; ?></b>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
+	<tr><td colspan="2">Last updated by <strong><?php echo $datas3["updatedby_name"]; ?></strong>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
 <?php } if ($datas["deleted"]==1) {?>
 	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2"><span class="no"><b>Moved to <a href="trashcan.php">Trashcan</a></b></span></td></tr>
+	<tr><td colspan="2"><span class="no"><strong>Moved to <a href="trashcan.php">Trashcan</a></strong></span></td></tr>
 <?php }}?>
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr><td align="right" colspan="2"><input name="savesection" type="submit" value="Save" /><?php if ($edit && $headadmin && $datas["deleted"]!=1) {?>&nbsp;&nbsp;&nbsp;<input name="delete" type="submit" value="Delete section" /><?php }?></td></tr>
-	<tr><td colspan="2" align="right"><?php if (isset($_POST["savesection"]) || isset($_POST["delete"])): ?><br /><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?></td></tr>
+	<tr><td colspan="2" align="right"><?php if (isset($_POST["savesection"]) || isset($_POST["delete"])): ?><br><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?></td></tr>
 </table>
 </form>
 <?php }?>

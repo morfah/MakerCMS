@@ -59,9 +59,8 @@ if ($fetch["timezone"]!="") $timezone = $fetch["timezone"];
 else $timezone = date_default_timezone_get();
 $headadmin = $fetch["headadmin"];
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title>Global Site Settings</title>
@@ -94,15 +93,15 @@ if (!$headadmin): $inputsettings="disabled=\"disabled\""; else: $inputsettings="
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<?php if($headadmin):?>
 	<tr align="right"><td colspan="2"><input type="submit" name="submit" value="Save" /></td></tr>
-	<tr><td colspan="2" align="right"><?php if(isset($saved)) :?><br /><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?></td></tr>
+	<tr><td colspan="2" align="right"><?php if(isset($saved)) :?><br><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?></td></tr>
 	<?php endif;?>
 </table>
 </form>
 
-<br /><br />
+<br><br>
 <div class="infobox">
-	<?php if($headadmin):?>* Change this setting in 'includes/config.php' instead.<br />
-	<?php else:?>Only Headadmins can change global site settings.<br />If you see something wrong here contact a Headadmin.<br /><?php endif;?>
+	<?php if($headadmin):?>* Change this setting in 'includes/config.php' instead.<br>
+	<?php else:?>Only Headadmins can change global site settings.<br>If you see something wrong here contact a Headadmin.<br><?php endif;?>
 </div>
 
 </body>

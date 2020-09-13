@@ -35,7 +35,7 @@ if (isset($_POST["save"])){
 			$i = "0".$i;
 		$sql .= ", week".$i."='".$week[$i]."'";
 	}
-	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+	@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	$what = "ok";
 }
 
@@ -43,9 +43,8 @@ $sql = "SELECT * FROM quotes";
 $query = mysqli_query($conn, $sql);
 $datas = mysqli_fetch_array($query);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title>Quote of the week</title>
@@ -65,7 +64,7 @@ if (strlen($loop)==1)
 ?>
 
 	<tr>
-		<td class="relatedLinks" style="width:10px;"><?php if ($veckonr == $loop){ echo "<b>".$loop."</b>";} else{ echo $loop; } ?></td>
+		<td class="relatedLinks" style="width:10px;"><?php if ($veckonr == $loop){ echo "<strong>".$loop."</strong>";} else{ echo $loop; } ?></td>
 		<td class="relatedLinks"><input name="week<?php echo $loop;?>" type="text" value="<?php echo $datas["week"."$loop"]?>" style="width:100%;" /></td>
 	</tr>
 <?php

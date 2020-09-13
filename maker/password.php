@@ -27,16 +27,15 @@ if (isset($_POST["change"])){
 	if ($oldpassword==$_SESSION["sess_pass"] && $newpassword == $newpasswordagain && strlen($_POST["newpassword"]) > 5) {
 		$_SESSION["sess_pass"] = $newpasswordagain;
 		$sql = "UPDATE maker SET password='" . $newpasswordagain . "' WHERE id=" . $_SESSION['sess_id'];
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		$what = "ok";
 	}
 	else
 		$what = "error";
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title>Password changer</title>
@@ -62,7 +61,7 @@ if (isset($_POST["change"])){
 		}
 		else{
 ?>
-			<div class="infobox error">You did something wrong.<br />Make sure you typed everything correctly.<br /><em>Also, new passwords are required to be at least 6 characters long.</em></div>
+			<div class="infobox error">You did something wrong.<br>Make sure you typed everything correctly.<br><em>Also, new passwords are required to be at least 6 characters long.</em></div>
 <?php
 		}
 	}

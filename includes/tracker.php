@@ -21,6 +21,6 @@
 	$date_auto = time();
 	
 	$sql = "INSERT INTO tracker (IP, URL, browser, referer, date_auto) VALUES ('$IP', '$this_url', '$browser', '$referer', '$date_auto')";
-	@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+	@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 	unset($this_url, $IP, $browser, $referer, $date_auto,$sql);
 ?>

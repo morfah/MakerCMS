@@ -169,9 +169,8 @@ else{
 $title = "URL editor"; // Title
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title><?php echo $title;?></title>
@@ -246,12 +245,12 @@ function refresh_ce(){
     </tr>
 <?php if ($edit) {?>
 	<tr><td colspan="6">&nbsp;</td></tr>
-	<tr><td colspan="6">Originally written by <b><?php echo $datas2["startedby_name"]; ?></b>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
+	<tr><td colspan="6">Originally written by <strong><?php echo $datas2["startedby_name"]; ?></strong>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
 <?php if ($datas["updatedby"]!="") {?>
-	<tr><td colspan="6">Last updated by <b><?php echo $datas3["updatedby_name"]; ?></b>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
+	<tr><td colspan="6">Last updated by <strong><?php echo $datas3["updatedby_name"]; ?></strong>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
 <?php } if ($datas["deleted"]==1) {?>
 	<tr><td colspan="6">&nbsp;</td></tr>
-	<tr><td colspan="6"><span class="no"><b>Moved to <a href="trashcan.php">Trashcan</a></b></span></td></tr>
+	<tr><td colspan="6"><span class="no"><strong>Moved to <a href="trashcan.php">Trashcan</a></strong></span></td></tr>
 <?php }}?>
 	<tr>
 <?php
@@ -287,7 +286,7 @@ if ($edit){
     <tr><td colspan="6">&nbsp;</td></tr>
 	<tr><td colspan="6" align="right"><input name="save" type="submit" value="Save" /><?php if ($edit && $headadmin && $datas["deleted"]!=1) {?>&nbsp;&nbsp;&nbsp;<input name="delete" type="submit" value="Delete" /><?php }?></td></tr>
 	<tr><td colspan="6" align="right">
-		<?php if (isset($_POST["save"]) || isset($_POST["delete"])):?><br /><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?>
+		<?php if (isset($_POST["save"]) || isset($_POST["delete"])):?><br><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?>
 	</td></tr>
 </table>
 </form>

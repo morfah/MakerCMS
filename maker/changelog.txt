@@ -1,6 +1,13 @@
 Maker changelog
 
-v0.1.8
+v0.2.0 - 2020-09-13
+* Added compatability with PHP 7 and MySQL 8.
+* Upgraded TinyMCE library to 5.4.2 (LGPL 2.1).
+* Changed to HTML 5 instead of XHTML.
+* Other minor fixes.
+
+
+v0.1.8 - 2011?
 * Passwords are now required to be at least 6 characters long.
 * Normal admins can move pages too, if they have permission to that section.
 * Fixed a few random bugs here and there.

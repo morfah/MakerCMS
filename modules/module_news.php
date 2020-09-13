@@ -14,9 +14,9 @@ for ($i=0;$i<$rows;$i++){
 	echo "<div class=\"newscontainer\">\n";
 	echo "<div class=\"newsheader\">$headline</div>\n";
 	echo "<div class=\"newsrow\">\n$news\n";
-	echo "<span class=\"newsauthor\"><br />Written: ".date("Y-m-d H:i:s", $db["time"]);
+	echo "<span class=\"newsauthor\"><br>Written: ".date("Y-m-d H:i:s", $db["time"]);
 	if ($db["time"]!=$db["updatedtime"])
-		echo "<br />Updated: ".date("Y-m-d H:i:s", $db["updatedtime"]);
+		echo "<br>Updated: ".date("Y-m-d H:i:s", $db["updatedtime"]);
 	echo "</span>\n</div>\n";
 	echo "</div>\n<p>&nbsp;</p>\n";
 	echo "<!-- News id: $id - Stop -->\n\n";

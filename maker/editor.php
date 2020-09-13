@@ -172,49 +172,29 @@ else{
 $title = "Page editor"; // Title
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title><?php echo $title;?></title>
 <link rel="stylesheet" href="theme/css/stylemaker.css" type="text/css" />
-<script language="javascript" type="text/javascript" src="javascript/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript" src="javascript/tinymce/tinymce.min.js"></script>
 <script language="javascript" type="text/javascript">
 	tinyMCE.init({
 		// General options
 		mode : "textareas",
-		theme : "advanced",
-		plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+		element_format : 'html',
+		theme : "silver",
+		plugins : ['autolink', 'lists', 'spellchecker', 'pagebreak', 'table', 'save', 'insertdatetime', 'preview', 'media', 'searchreplace', 'print', 'paste', 'directionality', 'fullscreen', 'noneditable', 'visualchars', 'nonbreaking', 'template', 'code'],
 
 		document_base_url : "<?php echo $url ?>",
 		convert_urls : false,
-
-		// Theme options
-		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
 		
 		// a html5 tag that randompolygons.com uses
 		extended_valid_elements : "aside",
 
 		// Skin options
-		skin : "o2k7",
-		skin_variant : "silver",
-
-		// Example content CSS (should be your site CSS)
-		content_css : "theme/css/style.css,maker/theme/css/styletinymce.css",
-
-		// Drop lists for link/image/media/template dialogs
-		template_external_list_url : "js/template_list.js",
-		external_link_list_url : "js/link_list.js",
-		external_image_list_url : "js/image_list.js",
-		media_external_list_url : "js/media_list.js"
+		skin : "oxide"
 	});
 </script>
 <script type="text/javascript" src="javascript/overlib/Mini/overlib_mini.js"><!-- overLIB (c) Erik Bosrup --></script>
@@ -300,12 +280,12 @@ if ($edit) {
 
 <?php if ($edit) {?>
 	<tr><td colspan="6">&nbsp;</td></tr>
-	<tr><td colspan="6">Originally written by <b><?php echo $datas2["startedby_name"]; ?></b>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
+	<tr><td colspan="6">Originally written by <strong><?php echo $datas2["startedby_name"]; ?></strong>&nbsp;(<?php echo $datas["startedby_date"]; ?>)</td></tr>
 <?php if ($datas["updatedby"]!="") {?>
-	<tr><td colspan="6">Last updated by <b><?php echo $datas3["updatedby_name"]; ?></b>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
+	<tr><td colspan="6">Last updated by <strong><?php echo $datas3["updatedby_name"]; ?></strong>&nbsp;(<?php echo $datas["updatedby_date"]; ?>)</td></tr>
 <?php } if ($datas["deleted"]==1) {?>
 	<tr><td colspan="6">&nbsp;</td></tr>
-	<tr><td colspan="6"><span class="no"><b>Moved to <a href="trashcan.php">Trashcan</a></b></span></td></tr>
+	<tr><td colspan="6"><span class="no"><strong>Moved to <a href="trashcan.php">Trashcan</a></strong></span></td></tr>
 <?php }}?>
 	<tr>
 <?php
@@ -341,7 +321,7 @@ if ($edit){
     <tr><td colspan="6">&nbsp;</td></tr>
 	<tr><td colspan="6" align="right"><input name="save" type="submit" value="Save" /><?php if ($edit && $headadmin && $datas["deleted"]!=1) {?>&nbsp;&nbsp;&nbsp;<input name="delete" type="submit" value="Delete" /><?php }?></td></tr>
 	<tr><td colspan="6" align="right">
-		<?php if (isset($_POST["save"]) || isset($_POST["delete"])):?><br /><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?>
+		<?php if (isset($_POST["save"]) || isset($_POST["delete"])):?><br><div class="infobox saved">Saved <?php echo date("Y-m-d H:i:s");?></div><?php endif;?>
 	</td></tr>
 </table>
 </form>

@@ -21,7 +21,7 @@ for ($i=0;$i<$rows;$i++){
 	if(isset($fetch["updatedby_date"])) $updated=$fetch["updatedby_date"];
 	else $updated=$fetch["startedby_date"];
 
-	echo "\n<p><br /><span class=\"updated\">Updated $updated</span></p>\n";
+	echo "\n<p><br><span class=\"updated\">Updated $updated</span></p>\n";
 	echo "<!-- Sid: $sid Id: $id - Stop -->\n\n";
 }
 ?>

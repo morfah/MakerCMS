@@ -5,5 +5,5 @@ if ((strlen($search) <= 20) && (strlen($search) > 0)) {
 	search($search,"all",$charset);
 }
 else
-	echo "<h3>Error your search was not valid.</h3><br />Search criterea: 1-20 characters.";
+	echo "<h3>Error your search was not valid.</h3><br>Search criterea: 1-20 characters.";
 ?>

@@ -20,9 +20,8 @@ else $charset = "utf-8";
 if ($headadmin) $colspan = 4;
 else $colspan = 2;
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 <title>Menu</title>
@@ -43,13 +42,13 @@ if ($headadmin){
 		$sql = "SELECT * FROM `sections` WHERE `deleted` = 0";
 		$rows = mysqli_num_rows(mysqli_query($conn, $sql));
 		$sql = "UPDATE `sections` SET `deleted` = 0, `order` = ".($rows+1)." WHERE `sid` = $sid";
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 	else if (isset($_POST["submit_deletesection"])){
 		$sid = $_GET["sid"];
 		$sql = "DELETE sections FROM sections WHERE sections.sid=$sid";
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 	else if (isset($_POST["submit_restorepage"])){
@@ -59,17 +58,17 @@ if ($headadmin){
 			$sql = "SELECT * FROM `content` WHERE `sid` = ".$_POST["submit_restorepage"]." AND `deleted` = 0";
 		else
 			$sql = "SELECT * FROM `content` WHERE `sid` = $sid AND `deleted` = 0";
-		//echo $sql . "<br />";
+		//echo $sql . "<br>";
 		$rows = mysqli_num_rows(mysqli_query($conn, $sql));
-		//echo "rows = $rows <br />";
+		//echo "rows = $rows <br>";
 		$sql = "UPDATE `content` SET `deleted` = 0, `order` = ".($rows+1)." WHERE `id` = $id AND `sid` = $sid";
-		//echo $sql . "<br />";
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		//echo $sql . "<br>";
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		//Are we moving the page to a diffrent section?
 		if ($_POST["submit_restorepage"] > 0){
 			$sql = "UPDATE `content` SET `sid` = ".$_POST["submit_restorepage"]." WHERE `id` = $id AND `sid` = $sid";
 			//echo $sql;
-			@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+			@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		}
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
@@ -77,7 +76,7 @@ if ($headadmin){
 		$id=$_GET["id"];
 		$sid=$_GET["sid"];
 		$sql = "DELETE FROM content WHERE id=$id AND sid=$sid";
-		@mysqli_query($conn, $sql) or die("<b>A fatal MySQL error occurred</b>.\n<br />\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
+		@mysqli_query($conn, $sql) or die("<strong>A fatal MySQL error occurred</strong>.\n<br>\nError: (" . mysqli_connect_errno() . ") " . mysqli_connect_error());
 		echo "<script type=\"text/javascript\">refresh_ce();</script>\n";
 	}
 }

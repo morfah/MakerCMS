@@ -8,5 +8,5 @@ echo $db["context"];
 if(isset($db["updatedby_date"])) $updated=$db["updatedby_date"];
 else $updated=$db["startedby_date"];
 
-echo "\n<p><br /><span class=\"updated\">Updated $updated</span></p>";
+echo "\n<p><br><span class=\"updated\">Updated $updated</span></p>";
 ?>

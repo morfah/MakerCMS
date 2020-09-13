@@ -58,9 +58,8 @@ if (isset($_SESSION['sess_user'])){
 	  exit;
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset ?>" />
 	<meta name="Author" content="Kristian 'morfar' Johansson" />
@@ -104,10 +103,10 @@ function javascript_cookies_check() {
 if (!isset($_SESSION['sess_user'])){
 	// Show error message if login was incorrect
 	if (isset($_GET['badlogin'])){?>
-		<div class="infobox centerbox error">Wrong username or password!<br />Try again!</div>
+		<div class="infobox centerbox error">Wrong username or password!<br>Try again!</div>
 	<?php }
 	else if (isset($_GET['sessiontimeout'])){?>
-		<div class="infobox centerbox warning">The login session is over. Please login here again.<br />
+		<div class="infobox centerbox warning">The login session is over. Please login here again.<br>
 		Your last action was NOT saved.</div>
 	<?php }
 ?> 

@@ -23,8 +23,8 @@ $version = file_get_contents(".version");
 $Upgrade = new upgrade();
 $Upgrade->database($fetch ["version"], $version);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type"
 	content="text/html; charset=<?php echo $charset?>" />
@@ -41,7 +41,7 @@ $Upgrade->database($fetch ["version"], $version);
 	<body>
 	Your browser does not support &quot;frames&quot;, please upgrade your
 	browser.
-	<br />
+	<br>
 	Or be a smart person to download and use
 	<a href="http://www.mozilla.org/products/firefox/" target="_blank">Firefox</a>
 	</body>

@@ -70,7 +70,7 @@ else{
 		$query = mysqli_query($conn, $sql);
 	}
 	
-	$db = @mysqli_fetch_array($query) or die("<span style=\"color:red;\">Could not fetch from database.<br/>".mysqli_connect_error()."</span>");
+	$db = @mysqli_fetch_array($query) or die("<span style=\"color:red;\">Could not fetch from database.<br>".mysqli_connect_error()."</span>");
 	if (isset($db["headline"]) && $db["headline"]!="") $title .= " - ".$db["headline"];
   	else $title .= " - ".$db["header"]; 
   	
